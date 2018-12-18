@@ -12,7 +12,7 @@
   <property name="severity" value="warning"/>
   <module name="TreeWalker">
     <property name="cacheFile" value="cacheFileTreeWalker"/>
-    <module name="FileContentsHolder"/>
+    <!--<module name="FileContentsHolder"/>-->
     <module name="JavadocType"/>
     <module name="JavadocStyle">
       <property name="checkFirstSentence" value="false"/>
@@ -77,9 +77,9 @@
       <property name="ignoreAnnotation" value="true"/>
     </module>
     <module name="MissingSwitchDefault"/>
-    <module name="RedundantThrows">
-      <property name="suppressLoadErrors" value="true"/>
-    </module>
+    <!--<module name="RedundantThrows">-->
+      <!--<property name="suppressLoadErrors" value="true"/>-->
+    <!--</module>-->
     <module name="SimplifyBooleanExpression"/>
     <module name="SimplifyBooleanReturn"/>
     <module name="InterfaceIsType"/>
@@ -110,5 +110,5 @@
     <property name="severity" value="ignore"/>
     <metadata name="net.sf.eclipsecs.core.lastEnabledSeverity" value="inherit"/>
   </module>
-  <module name="SuppressionCommentFilter"/>
+  <!--<module name="SuppressionCommentFilter"/>-->
 </module>

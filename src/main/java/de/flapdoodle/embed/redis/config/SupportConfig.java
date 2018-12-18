@@ -45,4 +45,8 @@ public class SupportConfig implements ISupportConfig {
 		return null;
 	}
 
+	@Override
+	public long maxStopTimeoutMillis() {
+		return 0;
+	}
 }
