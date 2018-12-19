@@ -10,6 +10,7 @@ apply plugin: 'eclipse'
 apply plugin: 'idea'
 apply plugin: 'checkstyle'
 apply plugin: 'maven'
+apply plugin: 'maven-publish'
 
 sourceCompatibility = JavaVersion.VERSION_1_8
 targetCompatibility = JavaVersion.VERSION_1_8
@@ -62,45 +63,15 @@ task jenkinsTest {
 
 build.dependsOn(jenkinsTest)
 
-if (System.getenv('ARTIFACTORY_CONTEXT_URL')) {
-    publishing {
-        publications {
-            mavenJava(MavenPublication) {
-                pom.withXml {
-                    def pomNode = asNode()
-                    pomNode.dependencyManagement.replaceNode {}
+publishing {
+    publications {
+        maven(MavenPublication) {
+            groupId = group
+            artifactId = 'embedded-redis'
+            version = version
 
-                    // simply remove dependencies without a version
-                    // version-less dependencies are handled with dependencyManagement
-                    // see https://github.com/spring-gradle-plugins/dependency-management-plugin/issues/8 for more complete solutions
-                    pomNode.dependencies.dependency.findAll {
-                        it.version.text().isEmpty()
-                    }.each {
-                        it.replaceNode {}
-                    }
-                }
-                from components.java
-                def descriptor =
-                        artifacts = ["build/libs/${rootProject.name}-${version}.jar", sourcesJar]
-
-            }
-        }
-    }
-    artifactory {
-        contextUrl = System.getenv('ARTIFACTORY_CONTEXT_URL')
-
-        publish {
-            defaults {
-                publications('mavenJava')
-                publishArtifacts = true
-                publishPom = true
-
-            }
-            repository {
-                repoKey = "${version.contains('SNAPSHOT') ? (System.getenv('ARTIFACTORY_SNAPSHOT_REPO_KEY') ?: 'libs-snapshot-local') : (System.getenv('ARTIFACTORY_RELEASE_REPO_KEY') ?: 'libs-release-local')}"
-                username = System.getenv('ARTIFACTORY_USERNAME') ?: 'admin'
-                password = System.getenv('ARTIFACTORY_PASSWORD') ?: 'password'
-            }
+            from components.java
         }
     }
 }
+
