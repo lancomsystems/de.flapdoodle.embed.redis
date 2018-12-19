@@ -2,7 +2,7 @@ plugins {
     id 'com.jfrog.artifactory' version '4.4.0'
 }
 
-version = '1.11.5-SNAPSHOT'
+version = '2.0.0-SNAPSHOT'
 group = 'de.flapdoodle.embed'
 
 apply plugin: 'java'
@@ -10,10 +10,6 @@ apply plugin: 'eclipse'
 apply plugin: 'idea'
 apply plugin: 'checkstyle'
 apply plugin: 'maven'
-
-ext {
-    gradleWrapperVersion = project.gradleWrapperVersion
-}
 
 sourceCompatibility = JavaVersion.VERSION_1_8
 targetCompatibility = JavaVersion.VERSION_1_8
@@ -43,8 +39,8 @@ dependencies {
     compile 'org.apache.commons:commons-lang3:3.8.1'
     compile 'org.apache.commons:commons-exec:1.3'
     compile 'de.flapdoodle.embed:de.flapdoodle.embed.process:2.1.2'
-    compile 'redis.clients:jedis:2.9.0'
 
+    testCompile 'redis.clients:jedis:2.9.0'
     testCompile 'junit:junit:4.12'
     testCompile 'org.mockito:mockito-core:2.23.4'
     testCompile 'com.google.guava:guava:27.0.1-jre'

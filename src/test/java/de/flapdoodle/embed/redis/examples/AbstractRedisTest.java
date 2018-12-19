@@ -1,17 +1,17 @@
 /**
  * Copyright (C) 2011
- *   Michael Mosmann <michael@mosmann.de>
- *   Martin Jöhren <m.joehren@googlemail.com>
- *
+ * Michael Mosmann <michael@mosmann.de>
+ * Martin Jöhren <m.joehren@googlemail.com>
+ * <p>
  * with contributions from
- * 	konstantin-ba@github, Archimedes Trajano (trajano@github), Christian Bayer (chrbayer84@googlemail.com)
- *
+ * konstantin-ba@github, Archimedes Trajano (trajano@github), Christian Bayer (chrbayer84@googlemail.com)
+ * <p>
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
- *         http://www.apache.org/licenses/LICENSE-2.0
- *
+ * <p>
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * <p>
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -31,35 +31,35 @@ import de.flapdoodle.embed.redis.distribution.Version;
 // ->
 public abstract class AbstractRedisTest extends TestCase {
 
-	private RedisDExecutable _redisdExe;
-	private RedisDProcess _redisd;
+    private RedisDExecutable _redisdExe;
+    private RedisDProcess _redisd;
 
-	private Jedis _jedis;
+    private Jedis _jedis;
 
-	@Override
-	protected void setUp() throws Exception {
+    @Override
+    protected void setUp() throws Exception {
 
-		RedisDStarter runtime = RedisDStarter.getDefaultInstance();
-		_redisdExe = runtime.prepare(new RedisDConfig(
-				Version.Main.PRODUCTION, 12345));
-		_redisd = _redisdExe.start();
+        RedisDStarter runtime = RedisDStarter.getDefaultInstance();
+        _redisdExe = runtime.prepare(new RedisDConfig(
+                Version.STABLE, 12345));
+        _redisd = _redisdExe.start();
 
-		super.setUp();
+        super.setUp();
 
-		_jedis = new Jedis("localhost", 12345);
-	}
+        _jedis = new Jedis("localhost", 12345);
+    }
 
-	@Override
-	protected void tearDown() throws Exception {
-		super.tearDown();
+    @Override
+    protected void tearDown() throws Exception {
+        super.tearDown();
 
-		_redisd.stop();
-		_redisdExe.stop();
-	}
+        _redisd.stop();
+        _redisdExe.stop();
+    }
 
-	public Jedis getJedis() {
-		return _jedis;
-	}
+    public Jedis getJedis() {
+        return _jedis;
+    }
 
 }
 // <-

@@ -20,6 +20,10 @@
  */
 package de.flapdoodle.embed.redis.runtime;
 
+import de.flapdoodle.embed.process.distribution.Distribution;
+import de.flapdoodle.embed.process.extract.IExtractedFileSet;
+import de.flapdoodle.embed.redis.config.RedisDConfig;
+
 import java.io.File;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
@@ -28,10 +32,6 @@ import java.util.List;
 import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import de.flapdoodle.embed.process.distribution.Distribution;
-import de.flapdoodle.embed.process.extract.IExtractedFileSet;
-import de.flapdoodle.embed.redis.config.RedisDConfig;
 
 /**
  *
@@ -57,6 +57,8 @@ public class RedisD {
 		List<String> ret = new ArrayList<String>();
 		ret.addAll(Arrays.asList(redisdExecutable.executable()
 				.getAbsolutePath(),//
+				// bind only to local IPv4 loopback device
+				"--bind", "127.0.0.1",
 				"--port", "" + config.net().getPort(), //
 				"--dir", dbDir.getAbsolutePath(),//
 				// daemonize doesn't work with the output processor,

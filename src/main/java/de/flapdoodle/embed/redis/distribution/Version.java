@@ -26,36 +26,10 @@ import de.flapdoodle.embed.process.distribution.IVersion;
  * Redis Version enum
  */
 public enum Version implements IVersion {
-
-	/**
-	 * old 2.6 release release
-	 */
-	@Deprecated
-	V2_6_14("2.6.14_5"),
-
-	/**
-	 * old 2.8 release
-	 */
-
-	@Deprecated
-	V2_8_13("2.8.13_1"),
-
-	/**
-	 * new 2.8 release
-	 */
-	@Deprecated
-	V2_8_19("2.8.19_1"),
-
-	/**
-	 * new 3.0 release
-	 */
-	@Deprecated
-	V3_0_04("3.0.0-rc4"),
-
-	/**
-	 * Latest 3.2 series production release
-	 */
-	V3_2_1("3.2.1");
+	V3("3.2.12"),
+	V4("4.0.12"),
+	V5("5.0.3"),
+	STABLE(V5.specificVersion);
 
 	private final String specificVersion;
 
@@ -72,46 +46,4 @@ public enum Version implements IVersion {
 	public String toString() {
 		return "Version{" + specificVersion + '}';
 	}
-
-	public static enum Main implements IVersion {
-		/**
-		 * latest production release
-		 */
-		@Deprecated
-		V2_8(V2_8_19),
-
-		/**
-		 * old production release
-		 */
-		@Deprecated
-		V2_8_OLD(V2_8_13),
-
-		/**
-		 * legacy production release
-		 */
-		@Deprecated
-		V2_6(V2_6_14),
-
-        /**
-         * Latest production release
-         */
-        V3_2(V3_2_1),
-
-        PRODUCTION(V3_2),
-
-		@Deprecated
-		DEPRECATED(V2_6);
-
-		private final IVersion _latest;
-
-		Main(IVersion latest) {
-			_latest = latest;
-		}
-
-		@Override
-		public String asInDownloadPath() {
-			return _latest.asInDownloadPath();
-		}
-	}
-
 }

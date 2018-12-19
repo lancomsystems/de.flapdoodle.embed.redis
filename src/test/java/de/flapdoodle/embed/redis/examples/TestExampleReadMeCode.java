@@ -20,22 +20,10 @@
  */
 package de.flapdoodle.embed.redis.examples;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.net.UnknownHostException;
-import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
-import junit.framework.TestCase;
-import redis.clients.jedis.Jedis;
 import de.flapdoodle.embed.process.config.IRuntimeConfig;
 import de.flapdoodle.embed.process.config.io.ProcessOutput;
 import de.flapdoodle.embed.process.distribution.Distribution;
 import de.flapdoodle.embed.process.distribution.GenericVersion;
-import de.flapdoodle.embed.process.distribution.IVersion;
 import de.flapdoodle.embed.process.extract.ITempNaming;
 import de.flapdoodle.embed.process.extract.UUIDTempNaming;
 import de.flapdoodle.embed.process.extract.UserTempNaming;
@@ -58,7 +46,17 @@ import de.flapdoodle.embed.redis.config.DownloadConfigBuilder;
 import de.flapdoodle.embed.redis.config.RedisDConfig;
 import de.flapdoodle.embed.redis.config.RuntimeConfigBuilder;
 import de.flapdoodle.embed.redis.distribution.Version;
-import de.flapdoodle.embed.redis.tests.RedisDForTestsFactory;
+import junit.framework.TestCase;
+import redis.clients.jedis.Jedis;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.net.UnknownHostException;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class TestExampleReadMeCode extends TestCase {
 
@@ -67,7 +65,7 @@ public class TestExampleReadMeCode extends TestCase {
 		// ->
 		int port = Network.getFreeServerPort();
 		RedisDConfig redisdConfig = new RedisDConfig(
-				Version.Main.PRODUCTION, port);
+				Version.STABLE, port);
 
 		RedisDStarter runtime = RedisDStarter.getDefaultInstance();
 
@@ -95,7 +93,7 @@ public class TestExampleReadMeCode extends TestCase {
 		// ->
 		int port = Network.getFreeServerPort();;
 		RedisDConfig redisdConfig = new RedisDConfig(
-				Version.Main.PRODUCTION, port);
+				Version.STABLE, port);
 
 		Command command = Command.RedisD;
 
@@ -136,28 +134,6 @@ public class TestExampleReadMeCode extends TestCase {
 		Class<?> see = AbstractRedisTest.class;
 	}
 
-	// #### ... with some more help
-	public void testRedisdForTests() throws IOException {
-		// ->
-		// ...
-		RedisDForTestsFactory factory = null;
-		try {
-			factory = RedisDForTestsFactory.with(Version.Main.PRODUCTION);
-
-			Jedis jedis = factory.newJedis();
-			// adding a new key
-			jedis.set("key", "value");
-			// getting the key value
-			assertEquals("value", jedis.get("key"));
-
-		} finally {
-			if (factory != null)
-				factory.shutdown();
-		}
-		// ...
-		// <-
-	}
-
 	// ### Customize Download URL
 	public void testCustomizeDownloadURL() {
 		// ->
@@ -184,7 +160,7 @@ public class TestExampleReadMeCode extends TestCase {
 
 		int port = Network.getFreeServerPort();
 		RedisDConfig redisdConfig = new RedisDConfig(
-				Version.Main.PRODUCTION, port);
+				Version.STABLE, port);
 
 		// ->
 		// ...
@@ -354,7 +330,7 @@ public class TestExampleReadMeCode extends TestCase {
 		// ...
 		int port = Network.getFreeServerPort();
 		RedisDConfig redisdConfig = new RedisDConfig(new GenericVersion(
-				"3.2.1"), port);
+				"5.0.3"), port);
 
 		RedisDStarter runtime = RedisDStarter.getDefaultInstance();
 		RedisDProcess redisd = null;
@@ -385,19 +361,6 @@ public class TestExampleReadMeCode extends TestCase {
 
 	}
 
-	// ### Main Versions
-	public void testMainVersions() throws UnknownHostException, IOException {
-		// ->
-		IVersion version = Version.V2_6_14;
-		// uses latest supported 2.2.x Version
-		version = Version.Main.V2_6;
-		// uses latest supported production version
-		version = Version.Main.PRODUCTION;
-		// uses latest supported development version
-		version = Version.Main.DEPRECATED;
-		// <-
-	}
-
 	// ### Use Free Server Port
 	/*
 	 * // -> Warning: maybe not as stable, as expected. // <-
@@ -417,7 +380,7 @@ public class TestExampleReadMeCode extends TestCase {
 		// ->
 		// ...
 		RedisDConfig redisdConfig = new RedisDConfig(
-				Version.Main.PRODUCTION);
+				Version.STABLE);
 
 		RedisDStarter runtime = RedisDStarter.getDefaultInstance();
 
@@ -452,7 +415,7 @@ public class TestExampleReadMeCode extends TestCase {
 		// ->
 		// ...
 		RedisDConfig redisdConfig = new RedisDConfig(
-				Version.Main.PRODUCTION, new Net(), new Storage(),
+				Version.STABLE, new Net(), new Storage(),
 				new Timeout(30000));
 		// ...
 		// <-
